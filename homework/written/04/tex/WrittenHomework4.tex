@@ -1,27 +1,115 @@
-\documentclass{exam}
+\documentclass[answers]{exam}
 \usepackage{mystyle}
 
 \title{MATH 3191 Written Homework 4\\\rule{30pt}{1pt}/20 points}
-\author{Name: \rule{150pt}{1pt}}
-\date{Due: February 16th}
+\author{Name: Key}
+\date{Due: September 20th}
 
 \begin{document}
 \maketitle
 Show all work that leads to your answers. I will be providing feedback on the work as well as the answers!
 \begin{questions}
-    \question[20] Let 
+    \question[20] Let
     \[
         A = \begin{bmatrix}
-            1 & 2 & 3\\
-            3 & 2 & 3\\
-            2 & 2 & 2
-            \end{bmatrix}\qquad\qquad \vec{b} = \begin{bmatrix}
-            1\\2\\1
-            \end{bmatrix}
+            b & 2 & 3 \\
+            3 & 7 & 1 \\
+            8 & 5 & 8
+        \end{bmatrix}
     \]
+
     \begin{parts}
-    \part[10] Solve the system $A\vec{x} = \vec{b}$ using Gaussian Elimination
-    \part[10] Compute $A^{-1}$ and use this to solve the system $A\vec{x} = b$.
+        \part[10] Treating the columns of $A$ as separate vectors, determine what value of $b$ will
+        make the columns of $A$ linearly dependent. \emph{Hint}: Consider the definition of
+        linear dependence, you will need to solve a linear system
+        \part[10] Use the determinant of $A$ to find a value of $b$ to make $A$ have linearly
+        dependent rows
     \end{parts}
+    \begin{solution}
+        Note: I tried to word these parts to ensure each are done differently, and if you asked me
+        I tried to clarify. However if you used the determinant for both that is fine as I am realizing
+        now I was not as clear as I originally thought.
+        \begin{enumerate}[(a)]
+            \item For this, we are wanting to determine a value for $b$ such that
+                \[
+                    c_1\bMat{b\\3\\8} + c_2\bMat{2\\7\\5} + c_3\bMat{3\\1\\8} = \bMat{0\\0\\0}
+                \]
+                has a non-trivial solution. As usual, there are many ways of doing this, but the
+                method I will use is to rewrite above to have the vector with the unknown value
+                $b$ as the ``last'' vector. That gives us the matrix $B$ as below
+
+                \[
+                    B = \bMat{
+                        2 & 3 & b \\
+                        7 & 1 & 3 \\
+                        5 & 8 & 8
+                    }
+                \]
+                The reason that we do this is because I find it easier if we don't have
+                to worry about the value of $b$ during row reduction. In the original matrix $A$ we
+                have to ensure that $b$ is not $0$ before dividing by it. This is doable but kind of
+                annoying.
+
+                \begin{eqnarray*}
+                    \bMat{
+                        2 & 3 & b \\
+                        7 & 1 & 3 \\
+                        5 & 8 & 8
+                    }&\xrightarrow{R_1\gets\frac{1}{2}R_1}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        7 & 1 & 3 \\
+                        5 & 8 & 8
+                    }\\
+                    &\xrightarrow{R_2\gets R_2 - 7R_1}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        0 & \frac{-19}{2} & 3 - \frac{7b}{2} \\
+                        5 & 8 & 8
+                    }\\
+                    &\xrightarrow{R_3\gets R_3 - 5R_1}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        0 & -\frac{19}{2} & 3 - \frac{7b}{2} \\
+                        0 & \frac{1}{2} & 8 - \frac{5b}{2}
+                    }\\
+                    &\xrightarrow[R_3\gets 2R_3]{R_2\gets -\frac{2}{19}R_2}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        0 & 1 & -\frac{6}{19} + \frac{7b}{19} \\
+                        0 & 1 & 16 - 5b
+                    }\\
+                    &\xrightarrow{R_3\gets R_3-R_2}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        0 & 1 & -\frac{6}{19} + \frac{7b}{19} \\
+                        0 & 0 & \frac{310}{19} - \frac{102b}{19}
+                    }\\
+                    &\xrightarrow{R_3\gets \frac{19}{2}R_3}&\bMat{
+                        1 & \frac{3}{2} & \frac{b}{2} \\
+                        0 & 1 & -\frac{6}{19} + \frac{7b}{19} \\
+                        0 & 0 & 155 - 51b
+                    }
+                \end{eqnarray*}
+                Since we want to ensure that this matrix is linearly \textbf{dependent}, we
+                want to ensure that\\$155-51b=0$, which happens when
+
+                \[
+                    b = \frac{155}{51}.
+                \]
+            \item Recall that for all matrices, $\det{A}=\det{A^\top}$, and a matrix has linearly dependent
+                rows and columns if and only if it is not-invertible, which is true if and only if
+                its determinant is $0$. So, we will determine a value $b$ such that the determinant
+                of this matrix is $0$.
+
+                For this one, we will use the $3\times 3$ determinant formula as discussed in class.
+
+                \begin{align*}
+                    \det{A} &= b(7\cdot 8 - 1\cdot 5) - 2(3\cdot 8-1\cdot 8) + 3(3\cdot 5-7\cdot 8) \\
+                    &= 51b - 32 -123\\
+                    &= 51b - 155
+                \end{align*}
+                now, we set this equation equal to $0$, and solve for $b$ to get
+                \[
+                    b = \frac{155}{51}
+                \]
+                which was the same as the first part, which is a good sign!
+        \end{enumerate}
+    \end{solution}
 \end{questions}
 \end{document}

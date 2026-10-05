@@ -1,26 +1,63 @@
 \documentclass{exam}
 \usepackage{mystyle}
+\usepackage{placeins}
 
 \title{MATH 3191 Written Homework 5\\\rule{30pt}{1pt}/20 points}
 \author{Name: \rule{150pt}{1pt}}
-\date{Due: February 23rd}
+\date{Due: October 11th}
 
 \begin{document}
 \maketitle
 Show all work that leads to your answers. I will be providing feedback on the work as well as the answers!
 \begin{questions}
-    \question[10] Let 
-    \[
-        A = \begin{bmatrix}
-            a & b & c\\
-            1 & 2 & 3\\
-            3 & 2 & 1
-        \end{bmatrix}
-    \]
-    Compute the determinant of $A$ as a function of $a,b,c$. Note: This means you should have
-    $a,b,c$ present in your answer.
-    \newpage
-    \question[10] Let $A$ be an invertible matrix such that $A^{-1} = A^\top$. What are the possible
-    values for the determinant of $A$? Explain how you got your answer.
+    \question (20 points total):
+    Polynomial Interpolation\footnote{\url{https://en.wikipedia.org/wiki/Polynomial_interpolation}}
+    is a useful tool, so we will look at how to use different bases before we get to it with
+    Python Lab 4!
+
+    The main idea behind polynomial interpolation is that we want a polynomial to go through a given
+    set of points when we either don't necessarily know what the underlying function is or don't care
+    about the function itself, and instead only need an approximation.
+
+    For both of the following parts, we will be dealing with the following vector space:
+    $V = \mathcal{P}_2(\mathbb{R}), F=\mathbb{R}$ with the standard operations, and the standard
+    basis vectors are: $\mathcal{S} = \setBasic{1, t, t^2}$. We will use the following points
+    that we want to interpolate: (Note you do not need to use these numbers for anything in the problem,
+    but I am providing them so you can come back and see how this was made once you finish Python Lab 4)
+
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            $x$  & $y$ \\
+            \hline
+            \hline
+            $-2$ & $5$ \\
+            $-1$ & $2$ \\
+            $1$  & $7$ \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \begin{parts}
+        \part[10]
+        The Newton basis for the above interpolation points are given by:
+
+        \[
+            \mathcal{N} = \setBasic{1, t+2, t^2 +3t + 2}
+        \]
+
+        Similarly, the Lagrange basis is given by:
+
+        \[
+            \mathcal{L} = \setBasic{\frac{5}{3}\left(t^2-1\right), -t^2-t+2, \frac{7}{6}\left(t^2+3t+2\right)}
+        \]
+
+        Demonstrate that both of these sets $\mathcal{N}$ and $\mathcal{L}$ are actually bases of
+        $\mathcal{P}_2(\mathbb{R})$
+        \vfill
+        \newpage
+        \part[10]
+        Construct $P(\mathcal{N})_\mathcal{L} = \underset{\mathcal{L}\leftarrow\mathcal{N}}{P}$
+        \vfill
+    \end{parts}
 \end{questions}
 \end{document}

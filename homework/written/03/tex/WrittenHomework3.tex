@@ -1,39 +1,114 @@
-\documentclass{exam}
+\documentclass[answers]{exam}
 \usepackage{mystyle}
 
 \title{MATH 3191 Written Homework 3\\\rule{30pt}{1pt}/20 points}
-\author{Name: \rule{150pt}{1pt}}
-\date{Due: February 9th}
+\author{Name: Key}
+\date{Due: September 16th}
 
 \begin{document}
 \maketitle
 Show all work that leads to your answers. I will be providing feedback on the work as well as the answers!
 \begin{questions}
-    \question[10] Determine if the following $4$ vectors are linearly independent.
+    \question[10] Determine if the following $3$ vectors are linearly independent.
     \[
         \begin{bmatrix}
-            1\\0\\3\\4
-        \end{bmatrix},\quad
+            1\\0\\3
+        \end{bmatrix} \qquad
         \begin{bmatrix}
-            3\\2\\-1\\0
-        \end{bmatrix},\quad
+            3\\2\\-1
+        \end{bmatrix}\qquad
         \begin{bmatrix}
-            1\\1\\-3\\2
-        \end{bmatrix},\quad
-        \begin{bmatrix}
-            1\\1\\-5\\10
+            1\\1\\-1
         \end{bmatrix}
     \]
+    \begin{solution}
+        There are many ways to solve this one. Since we are going to invert a matrix whose columns
+        are the above vectors, we will go ahead and try to compute the inverse here to save computation
+
+        \begin{eqnarray}
+            \aMat{c|c}{
+                A & I
+            } &=& \aMat{ccc|ccc}{
+                1 & 3 & 1 & 1 & 0 & 0 \\
+                0 & 2 & 1 & 0 & 1 & 0 \\
+                3 & -1 & -1 & 0 & 0 & 1
+            }\nonumber\\
+            &\xrightarrow{R_3\gets R_3 - 3R_1}&\aMat{ccc|ccc}{
+                1 & 3 & 1 & 1 & 0 & 0 \\
+                0 & 2 & 1 & 0 & 1 & 0 \\
+                0 & -10 & -4 & -3 & 0 & 1
+            }\nonumber\\
+            &\xrightarrow{R_3\gets R_3 + 5R_2}&\aMat{ccc|ccc}{
+                1 & 3 & 1 & 1 & 0 & 0 \\
+                0 & 2 & 1 & 0 & 1 & 0 \\
+                0 & 0 & 1 & -3 & 5 & 1
+            }\label{eq:canStop}\\
+            &\xrightarrow{R_2\gets\frac{1}{2}R_2}&\aMat{ccc|ccc}{
+                1 & 3 & 1 & 1 & 0 & 0 \\
+                0 & 1 & \frac{1}{2} & 0 & \frac{1}{2} & 0 \\
+                0 & 0 & 1 & -3 & 5 & 1
+            }\nonumber\\
+            &\xrightarrow{R_2\gets R_2 - \frac{1}{2}R_3}&\aMat{ccc|ccc}{
+                1 & 3 & 1 & 1 & 0 & 0 \\
+                0 & 1 & 0 & \frac{3}{2} & -2 & -\frac{1}{2} \\
+                0 & 0 & 1 & -3 & 5 & 1
+            }\nonumber\\
+            &\xrightarrow{R_1\gets R_1 - R_3}&\aMat{ccc|ccc}{
+                1 & 3 & 0 & 4 & -5 & -1 \\
+                0 & 1 & 0 & \frac{3}{2} & -2 & -\frac{1}{2} \\
+                0 & 0 & 1 & -3 & 5 & 1
+            }\nonumber\\
+            &\xrightarrow{R_1\gets R_1 - 3R_2}&\aMat{ccc|ccc}{
+                1 & 0 & 0 & -\frac{1}{2} & 1 & \frac{1}{2} \\
+                0 & 1 & 0 & \frac{3}{2} & -2 & -\frac{1}{2} \\
+                0 & 0 & 1 & -3 & 5 & 1
+            }\nonumber
+        \end{eqnarray}
+
+        Since we were able to compute the inverse, the columns of the original matrix we computed
+        were linearly independent as desired.
+
+        Note that we could have stopped at \ref{eq:canStop} if we were only interested in if
+        these three vectors were linearly independent. Since we have 3 pivot columns, we know these
+        three are linearly independent. However, as we stated above, we will want the inverse
+        for a later problem, so we keep going!
+    \end{solution}
     \newpage
-    \question[10]Let $T$ be a linear transformation from $\R^2$ to $\R^3$ such that
+    \question[10]Let $A\in\R^{3\times 3}$ such that
     \[
-        T\left(\begin{bmatrix}1\\-1\end{bmatrix}\right) = \begin{bmatrix}2\\0\\5\end{bmatrix}
-            \textnormal{ and } 
-            T\left(\begin{bmatrix}1\\1\end{bmatrix}\right) = \begin{bmatrix}1\\1\\2\end{bmatrix}
+        A = \begin{bmatrix}
+            1 & 3 & 1 \\
+            0 & 2 & 1 \\
+            3 & -1 & -1
+        \end{bmatrix}
     \]
-    Compute the matrix $A$ such that $T(\vec{x}) = A\vec{x}$, then using this matrix, compute
+    Solve the following system for $\vec{x}$ by using $A^{-1}$
+
     \[
-        T\left(\begin{bmatrix}2\\4\end{bmatrix}\right)
+        \bMat{
+            1 & 3 & 1 \\
+            0 & 2 & 1 \\
+            3 & -1 & -1}\bmat{x_1\\x_2\\x_3} = \bMat{7 \\ 9 \\-11 }
     \]
+    \begin{solution}
+        Since we computed the inverse of the above matrix in problem 1, we just have to multiply
+        both sides by $A^{-1}$.
+
+        \begin{align*}
+            \bMat{x_1\\x_2\\x_3}    &= \bMat{-\frac{1}{2} & 1 & \frac{1}{2}\\
+                                         \frac{3}{2} & -2 & -\frac{1}{2}\\
+                                         -3 & 5 & 1}\bMat{7\\9\\-11}\\
+                &= 7\bMat{ -\frac{1}{2} \\ \frac{3}{2} \\ -3 }
+                + 9\bMat{ 1\\-2\\5 } - 11\bMat{\frac{1}{2} \\ -\frac{1}{2} \\ 1} \\
+                &= \bMat{-\frac{7}{2} + 9 - \frac{11}{2}\\
+                         \frac{21}{2} - 18 + \frac{11}{2}\\
+                         -21 + 45 - 11} \\
+                &= \bMat{
+                    0 \\
+                    -2 \\
+                    13
+                }
+        \end{align*}
+    \end{solution}
 \end{questions}
 \end{document}

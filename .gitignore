@@ -332,3 +332,5 @@ TSWLatexianTemp*
 
 # Remove the syllabus directory
 syllabus
+# Remove the late day tracker
+LateDays.ods
